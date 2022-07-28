@@ -29,12 +29,19 @@ let shopItemsData = [
   },
 ];
 let basket = JSON.parse(localStorage.getItem("data")) || [];
-let cn = basket.map(x=>x.item).reduce((x,y)=>x+y);
+// console.log(basket)
+// console.log(basket[0].item)
+// let cn = basket.map(x=>x.item)
+// console.log(cn)
+// localStorage.clear()
 let shop = document.getElementById("shop");
 shop.innerHTML = shopItemsData
   .map((x) => {
-    let {id} = x
+    let { id } = x;
+ 
+
     let search = basket.find((y) => y.id === id) || [];
+    // console.log(search);
     return `<div id="product-id-${id}" class="item">
     <img width="220px" src="${x.img}" alt="">
    <div class="details">
@@ -45,7 +52,9 @@ shop.innerHTML = shopItemsData
         <div class="price">$ ${x.price}</div>
         <div class="btn">
             <i onclick=decrement(${x.id}) class="bi bi-dash-lg"></i>
-            <div id="${x.id}" class="count">${ cn}</div>
+            <div id="${x.id}" class="count">
+            ${search.item === undefined ? 0 : search.item}
+            </div>
             <i onclick=increment(${x.id}) class="bi bi-plus-lg"></i>
         </div>
     </div>
@@ -91,6 +100,15 @@ let update = (id) => {
 
 let cartAmount = () => {
   let num = basket.map((x) => x.item).reduce((x, y) => x + y);
+
+
   document.getElementById("cartAmount").innerHTML = num;
+
   // console.log(num)
 };
+cartAmount()
+// let num = basket.map((x) => x.item).reduce((x, y) => x + y);
+
+// localStorage.setItem("dat",num)
+
+// let newnum = localStorage.getItem("dat")
